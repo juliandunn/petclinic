@@ -1,0 +1,30 @@
+<server description="petclinic">
+
+    <!-- Enable features -->
+    <featureManager>
+        <feature>monitor-1.0</feature>
+        <feature>jsp-2.2</feature>
+        <feature>jpa-2.0</feature>
+        <feature>jdbc-4.0</feature>
+        <feature>servlet-3.0</feature>
+        <feature>localConnector-1.0</feature>
+    </featureManager>
+
+    <httpEndpoint id="defaultHttpEndpoint"
+                  host="*"
+                  httpPort="9080"
+                  httpsPort="9443" />
+
+    <webApplication contextRoot="/" location="petclinic.war" />
+
+    <!-- Oracle Driver: assumes you have it installed on the local machine -->
+    <library id="OracleLib">
+          <fileset dir="/u01/app/oracle/product/11.2.0/xe/jdbc/lib" includes="ojdbc6.jar"/>
+    </library>
+    <jdbcDriver id="oracleDriver" libraryRef="OracleLib"/>
+
+    <!-- Pet Clinic with Oracle XE -->
+    <dataSource id="oracle" jdbcDriverRef="oracleDriver" jndiName="jdbc/petclinic" supplementalJDBCTrace="true" transactional="false" beginTranForVendorAPIs="false" type="javax.sql.DataSource" beginTranForResultSetScrollingAPIs="false" connectionSharing="MatchCurrentState">
+      <properties.oracle URL="jdbc:oracle:thin:petclinic/petclinic@localhost:1521:XE" driverType="oci"/>
+    </dataSource>
+</server>
